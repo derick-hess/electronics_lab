@@ -3,9 +3,7 @@ Electronics Lab
 ===============
 
 
-.. image:: https://img.shields.io/travis/derick-hess/electronics_lab.svg
-        :target: https://travis-ci.com/derick-hess/electronics_lab
-
+.. [![Build Status](https://travis-ci.com/derick-hess/electronics_lab.svg?token=sTqu5K45QoEUUPbbvdJp&branch=master)](https://travis-ci.com/derick-hess/electronics_lab)
 
 
 Drivers and tools for my personal eldectronics lab equipment
