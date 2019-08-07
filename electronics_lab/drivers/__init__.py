@@ -1,1 +1,2 @@
-# from .rigolds1054z import RigolDS1054z
+# flake8: noqa
+from .rigolds1054z import RigolDS1054z
