@@ -4,7 +4,7 @@ Electronics Lab
 
 
 .. image:: https://travis-ci.com/derick-hess/electronics_lab.svg?token=sTqu5K45QoEUUPbbvdJp&branch=master
-
+    :target: https://travis-ci.com/derick-hess/electronics_lab
 
 Drivers and tools for my personal eldectronics lab equipment
 
