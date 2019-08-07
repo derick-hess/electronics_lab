@@ -4,7 +4,7 @@ Electronics Lab
 
 
 .. image:: https://img.shields.io/travis/derick-hess/electronics_lab.svg
-        :target: https://travis-ci.org/derick-hess/electronics_lab
+        :target: https://travis-ci.com/derick-hess/electronics_lab
 
 
 
