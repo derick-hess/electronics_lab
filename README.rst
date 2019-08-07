@@ -3,7 +3,7 @@ Electronics Lab
 ===============
 
 
-.. [![Build Status](https://travis-ci.com/derick-hess/electronics_lab.svg?token=sTqu5K45QoEUUPbbvdJp&branch=master)](https://travis-ci.com/derick-hess/electronics_lab)
+.. image:: https://travis-ci.com/derick-hess/electronics_lab.svg?token=sTqu5K45QoEUUPbbvdJp&branch=master
 
 
 Drivers and tools for my personal eldectronics lab equipment
