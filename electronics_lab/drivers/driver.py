@@ -9,10 +9,7 @@ class Driver:
         self.debug = debug
 
     def print_info(self):
-        self.instrument.write('*IDN?')
-        fullreading = self.instrument.read_raw()
-        readinglines = fullreading.splitlines()
-        print("Instrument information: " + readinglines[0])
+        print("Instrument information: {}".format(self.instrument.query('*IDN?')))
 
     class Measurement:
         def __init__(self, name='', description='', command='', unit='', return_type=''):

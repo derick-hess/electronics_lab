@@ -33,10 +33,10 @@ class RigolDS1054z(Driver):
                                      description='actual voltage value corresponding to the threshold middle value')
     lower_voltage = Driver.Measurement(name='lower_voltage', command='VLOW', unit='Volts', return_type='float',
                                        description='actual voltage value corresponding to the threshold minimum value')
-    overshoot_voltage = Driver.Measurement(name='overshoot_percent', command='OVER', unit='%%', return_type='float',
+    overshoot_voltage = Driver.Measurement(name='overshoot_percent', command='OVER', unit='%', return_type='float',
                                            description='ratio of the difference of the maximum value and top'
                                                        'value of the waveform to the amplitude value')
-    preshoot_voltage = Driver.Measurement(name='preshoot_percent', command='PRES', unit='%%', return_type='float',
+    preshoot_voltage = Driver.Measurement(name='preshoot_percent', command='PRES', unit='%', return_type='float',
                                           description='ratio of the difference of the minimum value and base '
                                                       'value of the waveform to the amplitude value')
     variance_voltage = Driver.Measurement(name='variance_voltage', command='VARI', unit='Volts', return_type='float',
@@ -68,10 +68,10 @@ class RigolDS1054z(Driver):
                                              description='time difference between the threshold middle value '
                                                          'of a falling edge and the threshold middle '
                                                          'value of the next rising edge of the pulse')
-    positive_duty_percent = Driver.Measurement(name='positive_duty_ratio', command='PDUT', unit='%%',
+    positive_duty_percent = Driver.Measurement(name='positive_duty_ratio', command='PDUT', unit='%',
                                                return_type='float',
                                                description='ratio of the positive pulse width to the period')
-    negative_duty_percent = Driver.Measurement(name='negative_duty_ratio', command='NDUT', unit='%%',
+    negative_duty_percent = Driver.Measurement(name='negative_duty_ratio', command='NDUT', unit='%',
                                                return_type='float',
                                                description='ratio of the negative pulse width to the period')
     max_voltage_time = Driver.Measurement(name='max_voltage_time', command='TVMAX', unit='Seconds', return_type='float',
@@ -178,19 +178,20 @@ class RigolDS1054z(Driver):
         readinglines = fullreading.splitlines()
         if (meas_type.return_type == 'float'):
             reading = float(readinglines[0])
-            if (meas_type.unit == '%%'):
+            if (meas_type.unit == '%'):
                 percentage_reading = reading * 100
                 print("Channel " + str(
-                    channel) + " " + meas_type.name + " value is %0.2F " + meas_type.unit) % percentage_reading
+                    channel) + " " + meas_type.name + " value is " + str(percentage_reading) + " " + meas_type.unit)
+
             else:
                 eng_reading = self.eng_notation(reading)
                 print("Channel " + str(
                     channel) + " " + meas_type.name + " value is " + eng_reading + " " + meas_type.unit)
         elif (meas_type.return_type == 'int'):
             reading = int(float(readinglines[0]))
-            print("Channel " + str(channel) + " " + meas_type.name + " value is %d " + meas_type.unit) % reading
+            print("Channel " + str(channel) + " " + meas_type.name + " value is " + str(reading) + " " + meas_type.unit)
         else:
-            reading = str(readinglines[0])
+            reading = readinglines[0].decode("utf-8")
             print("Channel " + str(channel) + " " + meas_type.name + " value is " + reading + " " + meas_type.unit)
         return reading
 
@@ -209,13 +210,11 @@ class RigolDS1054z(Driver):
 
     def close(self):
         self.instrument.close()
-        print
-        "Closed USB session to oscilloscope"
+        print("Closed USB session to oscilloscope")
 
     def reset(self):
         self.instrument.write('*RST')
-        print
-        "Reset oscilloscope"
+        print("Reset oscilloscope")
         time.sleep(8)
 
     # probe should either be 10.0 or 1.0, per the setting on the physical probe
@@ -312,24 +311,19 @@ class RigolDS1054z(Driver):
         time.sleep(1)
         self.instrument.write(':WAV:MODE NORM')
         self.instrument.write(':WAV:FORM ASC')
-        self.instrument.write(':ACQ:MDEP?')
-        fullreading = self.instrument.read_raw()
-        readinglines = fullreading.splitlines()
-        mdepth = int(readinglines[0])
-        num_reads = (mdepth / 15625) + 1
+        self.instrument.write(':WAV:STAR 1')
+        self.instrument.write(':WAV:STAR 15625')
+
         if filename == '':
             filename = "rigol_waveform_data_channel_" + str(channel) + "_" + datetime.datetime.now().strftime(
                 "%Y-%m-%d_%H-%M-%S") + ".csv"
-        fid = open(filename, 'wb')
-        print("Started saving waveform data for channel " + str(channel) + " " + str(
-            mdepth) + " samples to filename " + '\"' + filename + '\"')
-        for read_loop in range(0, num_reads):
-            self.instrument.write(':WAV:DATA?')
-            fullreading = self.instrument.read_raw()
-            readinglines = fullreading.splitlines()
-            reading = str(readinglines[0])
-            reading = reading.replace(",", "\n")
-            fid.write(reading)
+        fid = open(filename, 'w')
+        print(
+            "Started saving waveform data for channel " + str(channel) + " samples to filename " + filename)
+        data = self.instrument.query(':WAV:DATA?')
+        data = data[11:]
+        data = data.replace(",", "\n")
+        fid.write(data)
         fid.close()
 
     def write_scope_settings_to_file(self, filename=''):
