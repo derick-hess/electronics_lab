@@ -1,3 +1,7 @@
+'''
+https://github.com/charkster/rigol_ds1054z
+'''
+
 import datetime
 import time
 import re
