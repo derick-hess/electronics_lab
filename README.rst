@@ -20,6 +20,8 @@ Features
 Credits
 -------
 
+The rigol driver is a modified version from this porject https://github.com/charkster/rigol_ds1054z
+
 This package was created with Cookiecutter_ and the `audreyr/cookiecutter-pypackage`_ project template.
 
 .. _Cookiecutter: https://github.com/audreyr/cookiecutter
