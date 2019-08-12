@@ -18,7 +18,7 @@ Features
 Contains basic drivers for:
 
 * Rigol ds1054z
-* Siglent sdp 3303x-e
+* Siglent spd3303x-e
 * Siglent sdm3055
 * Siglent sdg1032x
 
