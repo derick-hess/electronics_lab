@@ -15,7 +15,15 @@ Drivers and tools for my personal electronics lab equipment
 Features
 --------
 
-* TODO
+Contains basic drivers for:
+
+* Rigol ds1054z
+* Siglent sdp 3303x-e
+* Siglent sdm3055
+* Siglent sdg1032x
+
+These havent been tested on other devices, but each driver should work for anything in that range of instruments for each driver
+
 
 Credits
 -------
