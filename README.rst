@@ -28,7 +28,7 @@ These havent been tested on other devices, but each driver should work for anyth
 Credits
 -------
 
-The rigol driver is a modified version from this porject https://github.com/charkster/rigol_ds1054z
+The rigol driver is a modified version from this project https://github.com/charkster/rigol_ds1054z
 
 This package was created with Cookiecutter_ and the `audreyr/cookiecutter-pypackage`_ project template.
 
